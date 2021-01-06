@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 // matches GET requests to /api/customers/
-router.get('/', function (req, res, next) { /* etc */});
+router.get('/', function (req, res, next) { res.send('Hello there')});
 // matches POST requests to /api/customers/
 router.post('/', function (req, res, next) { /* etc */});
 // matches PUT requests to /api/customers/:customerId

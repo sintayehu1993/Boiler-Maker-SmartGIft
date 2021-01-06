@@ -1,4 +1,5 @@
-const {db, Customer, Store} = require('./server/db')
+const { green, red } = require('chalk');
+const {db, Customer, Store} = require('./server/db/moduel/index')
 
 
 const Customers = [
@@ -8,6 +9,7 @@ const Customers = [
         email:"sintayehu1993@gmail.com",
         userName: 'mati1993',
         password:'ethiopia111',
+        DOB:18,
         totalAmount: 0
     },
     {
@@ -36,3 +38,47 @@ const Stores = [{
         imageUrlOfCard:'https://www.shopmyexchange.com/products/images/xlarge/6060613_0000.jpg'
     }
 }]
+
+
+const seed = async () => {
+    try {
+      await db.sync({ force: true });
+  
+      await Promise.all(
+        Customers.map((customer) => {
+          return Customer.create(customer);
+        })
+      );
+  
+      await Promise.all(
+        Stores.map((store) => {
+          return Store.create(store);
+        })
+      );
+  
+      console.log(green("Seeding success!"));
+      db.close();
+    } catch (err) {
+      seed().catch((err) => {
+        console.error(red("Oh noes! Something went wrong!"));
+        console.error(err);
+        db.close();
+      });
+    }
+  };
+  seed();
+  
+  module.exports = seed;
+
+  if (require.main === module) {
+    seed()
+      .then(() => {
+        console.log(green('Seeding success!'));
+        db.close();
+      })
+      .catch((err) => {
+        console.error(red('Oh noes! Something went wrong!'));
+        console.error(err);
+        db.close();
+      });
+  }

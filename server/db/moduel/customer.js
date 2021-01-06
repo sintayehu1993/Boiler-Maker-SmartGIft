@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../database');
 
-const Customer = db.define('project', {
+const Customer = db.define('customer', {
   firstName: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -15,6 +15,9 @@ const Customer = db.define('project', {
     validate: {
       notEmpty: true,
     },
+  },
+  DOB: {
+      type:Sequelize.DATE
   },
   email: {
     type: Sequelize.STRING,
